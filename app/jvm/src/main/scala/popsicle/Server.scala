@@ -17,6 +17,7 @@ object Template{
         meta(httpEquiv:="Content-Type", content:="text/html; charset=UTF-8"),
         script(`type`:="text/javascript", src:="/client-fastopt.js"),
         script(`type`:="text/javascript", src:="//localhost:12345/workbench.js"),
+        script(`type`:="text/javascript", src:="http://cdnjs.cloudflare.com/ajax/libs/react/0.12.1/react-with-addons.min.js"),
         link(
           rel:="stylesheet",
           `type`:="text/css",

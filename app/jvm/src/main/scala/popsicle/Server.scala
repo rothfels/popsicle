@@ -1,4 +1,5 @@
 package popsicle
+
 import upickle._
 import spray.routing.SimpleRoutingApp
 import akka.actor.ActorSystem

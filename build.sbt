@@ -2,7 +2,7 @@ import sbt.Keys._
 import com.lihaoyi.workbench.Plugin._
 import spray.revolver.RevolverPlugin.Revolver
 
-val popsicle = crossProject.settings(
+val app = crossProject.settings(
   scalaVersion := "2.11.4",
   version := "0.1-SNAPSHOT",
   libraryDependencies ++= Seq(
@@ -35,10 +35,10 @@ val popsicle = crossProject.settings(
 
 skip in packageJSDependencies := false
 
-val popsicleJS = popsicle.js
-val popsicleJVM = popsicle.jvm.settings(
+val appJS = app.js
+val appJVM = app.jvm.settings(
   (resources in Compile) += {
-    (fastOptJS in (popsicleJS, Compile)).value
-    (artifactPath in (popsicleJS, Compile, fastOptJS)).value
+    (fastOptJS in (appJS, Compile)).value
+    (artifactPath in (appJS, Compile, fastOptJS)).value
   }
 )

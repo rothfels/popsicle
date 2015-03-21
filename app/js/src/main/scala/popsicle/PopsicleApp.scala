@@ -1,12 +1,14 @@
 package popsicle
-import scala.scalajs.js.annotation.JSExport
-import org.scalajs.dom
-import scala.util.Random
-import scala.concurrent.Future
-import scalajs.concurrent.JSExecutionContext.Implicits.runNow
-import scalatags.JsDom.all._
-import upickle._
+
 import autowire._
+import org.scalajs.dom
+import upickle._
+
+import scala.concurrent.Future
+import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
+import scala.scalajs.js.annotation.JSExport
+import scalatags.JsDom.all._
+
 object Client extends autowire.Client[String, upickle.Reader, upickle.Writer]{
   override def doCall(req: Request): Future[String] = {
     dom.ext.Ajax.post(
@@ -19,9 +21,8 @@ object Client extends autowire.Client[String, upickle.Reader, upickle.Writer]{
   def write[Result: upickle.Writer](r: Result) = upickle.write(r)
 }
 
-
 @JSExport
-object ScalaJSExample {
+object PopsicleApp {
   @JSExport
   def main(): Unit = {
 

@@ -10,7 +10,7 @@ This is an experimental repository for full-stack web development in Scala. It c
 - A [Spray](http://spray.io/) server (run on the JVM) serving a single-page-application (HTML) composed of [React](http://facebook.github.io/react/) UI components, as well as a RPC API mounted at `/api/`.
 - A [Scala.js](http://www.scala-js.org/) web client using the [Autowire](https://github.com/lihaoyi/autowire) library to connect React components to the Spray server API via Ajax (wrapped in type-safe, auto-routed RPCs).
 
-The server connects to mongo using the [ReactiveMongo](http://reactivemongo.org/#step-by-step-example) Scala driver, which is fully async / non-blocking. It builds on [Akka](http://akka.io/) and makes a perfect complement to Spray, which builds on Akka too.
+The server connects to mongo using the [ReactiveMongo](http://reactivemongo.org/) Scala driver, which is fully async / non-blocking. It builds on [Akka](http://akka.io/) and makes a perfect complement to Spray, which builds on Akka too.
 
 The React components are written in Scala with [extended](https://github.com/japgolly/scalajs-react) [scalatags](https://github.com/lihaoyi/scalatags) and compile down to optimized Javascript via [Google Closure Compiler](https://developers.google.com/closure/compiler/).
 

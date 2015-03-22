@@ -1,8 +1,9 @@
 package popsicle
 
-import scala.annotation.ClassfileAnnotation
+trait Api {
+  def getProduct(): models.Product
+}
 
-
-trait Api{
-  def list(path: String): Seq[String]
+trait Queries {
+  def getFlowduct(): models.Product
 }

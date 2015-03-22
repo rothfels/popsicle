@@ -8,7 +8,9 @@ val app = crossProject.settings(
   libraryDependencies ++= Seq(
     "com.lihaoyi" %%% "upickle" % "0.2.6",
     "com.lihaoyi" %%% "autowire" % "0.2.4",
-    "com.lihaoyi" %%% "scalatags" % "0.4.5"
+    "com.lihaoyi" %%% "scalatags" % "0.4.5",
+    "joda-time" % "joda-time" % "2.7",
+    "org.scala-lang.modules" %% "scala-async" % "0.9.2"
   )
 ).jsSettings(
   workbenchSettings:_*
@@ -29,7 +31,8 @@ val app = crossProject.settings(
     "io.spray" %% "spray-can" % "1.3.1",
     "io.spray" %% "spray-routing" % "1.3.1",
     "com.typesafe.akka" %% "akka-actor" % "2.3.2",
-    "org.webjars" % "bootstrap" % "3.3.4"
+    "org.webjars" % "bootstrap" % "3.3.4",
+    "org.reactivemongo" %% "reactivemongo" % "0.10.5.0.akka23"
   )
 )
 

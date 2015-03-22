@@ -13,11 +13,11 @@ import popsicle.db.Mongo
 trait MongoQueryRPC extends RPC {
   import popsicle.db.collections.ProductCollection.ProductCollectionReader
 
-  def getProduct(): models.Product = {
+  def getProduct: Option[models.Product] = {
     val product = Mongo.products
       .find(BSONDocument())
       .one[models.Product]
 
-    Await.result(product, 5.seconds).orNull
+    Await.result(product, 5.seconds)
   }
 }

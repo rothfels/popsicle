@@ -24,5 +24,5 @@ object AjaxClient extends autowire.Client[String, upickle.Reader, upickle.Writer
 }
 
 object AjaxRpcClient {
-  def getProduct: Future[models.Product] = AjaxClient[RPC].getProduct.call()
+  def getProduct: Future[Option[models.Product]] = AjaxClient[RPC].getProduct.call()
 }

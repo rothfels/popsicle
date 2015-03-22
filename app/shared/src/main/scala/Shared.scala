@@ -3,5 +3,5 @@ package popsicle
 
 
 trait RPC {
-  def getProduct(): models.Product
+  def getProduct(): Option[models.Product]
 }

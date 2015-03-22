@@ -8,7 +8,7 @@ import upickle._
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 
-object Client extends autowire.Client[String, upickle.Reader, upickle.Writer] {
+object AjaxClient extends autowire.Client[String, upickle.Reader, upickle.Writer] {
   override def doCall(req: Request): Future[String] = {
     println(req)
     println(req.path)
@@ -23,12 +23,6 @@ object Client extends autowire.Client[String, upickle.Reader, upickle.Writer] {
   def write[Result: upickle.Writer](r: Result) = upickle.write(r)
 }
 
-object APIClient {
-//  def list(path: String): Future[Seq[String]] = Client[Api].list(path).call()
-  def getProduct: Future[models.Product] = Client[Api].getProduct.call()
-}
-
-object QueryClient {
-  //  def list(path: String): Future[Seq[String]] = Client[Api].list(path).call()
-  def getProduct: Future[models.Product] = Client[Queries].getFlowduct.call()
+object AjaxRpcClient {
+  def getProduct: Future[models.Product] = AjaxClient[RPC].getProduct.call()
 }

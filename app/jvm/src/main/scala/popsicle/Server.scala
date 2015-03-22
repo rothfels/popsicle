@@ -1,17 +1,15 @@
 package popsicle
 
-import popsicle.db.Mongo
-import popsicle.db.queries.MongoQueries
-import reactivemongo.bson.BSONDocument
 import upickle._
-import spray.routing.SimpleRoutingApp
-import akka.actor.ActorSystem
-import scala.concurrent.duration._
-import scala.concurrent.Await
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import spray.http.{MediaTypes, HttpEntity}
+import spray.routing.SimpleRoutingApp
+import akka.actor.ActorSystem
 
-object Template{
+import popsicle.db.queries.MongoQueryRPC
+
+object Template {
   import scalatags.Text.all._
   import scalatags.Text.tags2.title
   val txt =
@@ -34,11 +32,13 @@ object Template{
       )
     )
 }
-object AutowireServer extends autowire.Server[String, upickle.Reader, upickle.Writer]{
+
+object AutowireServer extends autowire.Server[String, upickle.Reader, upickle.Writer] {
   def read[Result: upickle.Reader](p: String) = upickle.read[Result](p)
   def write[Result: upickle.Writer](r: Result) = upickle.write(r)
 }
-object Server extends SimpleRoutingApp with MongoQueries {
+
+object Server extends SimpleRoutingApp with MongoQueryRPC {
   def main(args: Array[String]): Unit = {
     implicit val system = ActorSystem()
     startServer("0.0.0.0", port = 8080) {
@@ -57,7 +57,7 @@ object Server extends SimpleRoutingApp with MongoQueries {
         path("api" / Segments){ s =>
           extract(_.request.entity.asString) { e =>
             complete {
-              AutowireServer.route[Queries](Server)(
+              AutowireServer.route[RPC](Server)(
                 autowire.Core.Request(s, upickle.read[Map[String, String]](e))
               )
             }

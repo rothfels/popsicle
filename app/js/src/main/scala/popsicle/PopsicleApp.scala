@@ -14,7 +14,7 @@ object PopsicleApp extends JSApp {
 
   case class Backend(t: BackendScope[_, State]) {
     def onMenuClick(newIndex: Int) = {
-      QueryClient.getProduct.foreach(println(_))
+      AjaxRpcClient.getProduct.foreach(println(_))
 //      APIClient.getProduct.foreach(println(_))
 //      APIClient.list("s").foreach(println(_))
       t.modState(_.copy(index = newIndex))

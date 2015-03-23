@@ -1,6 +1,6 @@
 package popsicle.db.queries
 
-import popsicle.RPC
+import popsicle.PopsicleRPC
 
 import scala.concurrent.duration._
 import scala.concurrent.Await
@@ -10,7 +10,7 @@ import reactivemongo.bson.BSONDocument
 
 import popsicle.db.Mongo
 
-trait MongoQueryRPC extends RPC {
+trait MongoQueryRPC extends PopsicleRPC {
   import popsicle.db.collections.ProductCollection.ProductCollectionReader
 
   def getProduct: Option[models.Product] = {

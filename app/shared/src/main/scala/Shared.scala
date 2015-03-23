@@ -1,7 +1,5 @@
 package popsicle
 
-
-
-trait RPC {
+trait PopsicleRPC {
   def getProduct(): Option[models.Product]
 }

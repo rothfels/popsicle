@@ -15,8 +15,6 @@ object PopsicleApp extends JSApp {
   case class Backend(t: BackendScope[_, State]) {
     def onMenuClick(newIndex: Int) = {
       AjaxRpcClient.getProduct.foreach(println(_))
-//      APIClient.getProduct.foreach(println(_))
-//      APIClient.list("s").foreach(println(_))
       t.modState(_.copy(index = newIndex))
     }
   }
@@ -33,7 +31,9 @@ object PopsicleApp extends JSApp {
 
       div(`class` := "navbar navbar-default",
         ul(`class` := "navbar-header",
-          data.zipWithIndex.map { case (name, index) => element(name, index)}
+          data.zipWithIndex.map {
+            case (name, index) => element(name, index)
+          }
         )
       )
     })

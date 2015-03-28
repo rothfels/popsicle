@@ -31,7 +31,9 @@ val app = crossProject.settings(
     "com.github.japgolly.scalajs-react" %%% "core" % "0.8.2",
     "com.github.japgolly.scalajs-react" %%% "test" % "0.8.2" % "test"
   ),
-  bootSnippet := "popsicle.PopsicleApp().main();"
+  bootSnippet := "popsicle.PopsicleApp().main();",
+  scalaJSStage in Test := FastOptStage,
+  jsEnv in Test        := PhantomJSEnv().value
 ).jvmSettings(
   Revolver.settings:_*
 ).jvmSettings(

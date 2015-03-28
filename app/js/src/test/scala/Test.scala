@@ -1,9 +1,9 @@
 import utest._
 
-object ServerTest extends TestSuite {
+object ClientTest extends TestSuite {
 
   // Initialize App
-//  TutorialApp.setupUI()
+  //  TutorialApp.setupUI()
 
   def tests = TestSuite {
     'HelloWorld {

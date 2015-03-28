@@ -1,8 +1,8 @@
-package popsicle.components
+package popsicle.components.examples
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import util._
+import popsicle.components.util.SideBySide
 
 
 /** Scala version of example on http://facebook.github.io/react/docs/thinking-in-react.html */

@@ -1,7 +1,7 @@
 package popsicle.pages
 
 import japgolly.scalajs.react._, vdom.all._
-import popsicle.components._
+import popsicle.components.examples._
 import popsicle.components.util._
 
 sealed abstract class Example(val title: String, val el: () => ReactElement)

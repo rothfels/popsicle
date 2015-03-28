@@ -1,10 +1,9 @@
-package popsicle.components
+package popsicle.components.examples
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom.raw.HTMLInputElement
-
-import util._
+import popsicle.components.util.SideBySide
 
 
 /** Scala version of example on http://facebook.github.io/react/docs/more-about-refs.html */

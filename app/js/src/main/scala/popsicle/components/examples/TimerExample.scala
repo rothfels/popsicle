@@ -1,9 +1,8 @@
-package popsicle.components
+package popsicle.components.examples
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-
-import util._
+import popsicle.components.util.SideBySide
 
 import scala.scalajs.js
 

@@ -19,8 +19,11 @@ object Template {
         title("Popsicle"),
         meta(httpEquiv:="Content-Type", content:="text/html; charset=UTF-8"),
         script(`type`:="text/javascript", src:="/client-fastopt.js"),
+        script(`type`:="application/octet-stream", src:="/client-fastopt.js.map"),
         script(`type`:="text/javascript", src:="//localhost:12345/workbench.js"),
         script(`type`:="text/javascript", src:="http://cdnjs.cloudflare.com/ajax/libs/react/0.12.1/react-with-addons.min.js"),
+        script(`type`:="text/javascript", src:="http://cdn.jsdelivr.net/jquery/2.1.1/jquery.js"),
+        script(`type`:="text/javascript", src:="META-INF/resources/webjars/bootstrap/3.3.4/js/bootstrap.min.js"),
         link(
           rel:="stylesheet",
           `type`:="text/css",

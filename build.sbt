@@ -1,6 +1,7 @@
 import sbt.Keys._
 import com.lihaoyi.workbench.Plugin._
 import spray.revolver.RevolverPlugin.Revolver
+import java.io.File
 
 val app = crossProject.settings(
   scalaVersion := "2.11.5",
@@ -32,8 +33,8 @@ val app = crossProject.settings(
     "com.github.japgolly.scalajs-react" %%% "test" % "0.8.2" % "test"
   ),
   bootSnippet := "popsicle.PopsicleApp().main();",
-  scalaJSStage in Test := FastOptStage,
-  jsEnv in Test        := PhantomJSEnv().value
+  scalaJSStage in Global := FastOptStage, // Global -> Test?
+  jsEnv in Global        := PhantomJSEnv().value // Global -> Test?
 ).jvmSettings(
   Revolver.settings:_*
 ).jvmSettings(
@@ -52,5 +53,10 @@ val appJVM = app.jvm.settings(
   (resources in Compile) += {
     (fastOptJS in (appJS, Compile)).value
     (artifactPath in (appJS, Compile, fastOptJS)).value
+  }
+).settings(
+  (resources in Compile) += {
+    (fastOptJS in (appJS, Compile)).value
+    new File((artifactPath in (appJS, Compile, fastOptJS)).value.getPath + ".map")
   }
 )

@@ -2,6 +2,8 @@ package popsicle
 
 import japgolly.scalajs.react._, vdom.all._
 import org.scalajs.dom
+import popsicle.components.Navbar.NavbarData
+import popsicle.components.{Navbar, Nav, ProductCatalog}
 import scala.scalajs.js.JSApp
 import scala.scalajs.js.annotation.JSExport
 import popsicle.pages._
@@ -66,10 +68,26 @@ object PopsicleApp extends JSApp {
     })
     .build
 
-  def component(data: List[String]) =
-    app(data) render dom.document.body
+  def component(data: List[String]) = {
+    //    ProductCatalog.ProductCatalog() render dom.document.body
+    import Nav._
+
+    val data = NavData(
+      List(
+        NavState("foo", () => "foo"),
+        NavState("baz", () => "baz"),
+        NavState("bar", () => "bar")
+      ),
+      NavProps(NavPills)
+    )
+    val myNav = new Nav(data)
+    myNav.nav render dom.document.body
+    (new Navbar(NavbarData(null))).renderable render dom.document.body
+    //    app(data) render dom.document.body
+  }
 
   @JSExport
-  override def main(): Unit =
+  override def main(): Unit = {
     component(List("Home", "Examples", "Documentation"))
+  }
 }

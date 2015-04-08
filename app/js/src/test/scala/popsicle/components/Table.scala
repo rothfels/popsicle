@@ -3,6 +3,7 @@ package popsicle.components
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.test.ReactTestUtils
 import japgolly.scalajs.react.vdom.all._
+import popsicle.components.bootstrap.Table
 import utest._
 
 object TableComponent extends TestSuite {

@@ -33,8 +33,9 @@ val app = crossProject.settings(
     "com.github.japgolly.scalajs-react" %%% "test" % "0.8.2" % "test"
   ),
   bootSnippet := "popsicle.PopsicleApp().main();",
-  scalaJSStage in Global := FastOptStage, // Global -> Test?
-  jsEnv in Global        := PhantomJSEnv().value // Global -> Test?
+  scalaJSStage in Test := FastOptStage, // Global -> Test?
+  emitSourceMaps in Test := true,
+  jsEnv in Test        := PhantomJSEnv().value // Global -> Test?
 ).jvmSettings(
   Revolver.settings:_*
 ).jvmSettings(
@@ -44,6 +45,7 @@ val app = crossProject.settings(
     "io.spray" %% "spray-routing" % "1.3.1",
     "com.typesafe.akka" %% "akka-actor" % "2.3.2",
     "org.webjars" % "bootstrap" % "3.3.4",
+    "org.webjars" % "bootstrap-material-design" % "0.2.2",
     "org.reactivemongo" %% "reactivemongo" % "0.10.5.0.akka23"
   )
 )

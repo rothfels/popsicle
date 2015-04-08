@@ -1,6 +1,7 @@
-package popsicle.components
+package popsicle.components.bootstrap
 
-import japgolly.scalajs.react._, vdom.all._
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.all._
 
 object Table {
 
@@ -21,7 +22,7 @@ object Table {
   )
 }
 
-import Table._
+import popsicle.components.bootstrap.Table._
 
 class Table(data: TableData) {
   val renderable = component(data)

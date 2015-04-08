@@ -24,14 +24,31 @@ object Template {
         script(`type`:="text/javascript", src:="http://cdnjs.cloudflare.com/ajax/libs/react/0.12.1/react-with-addons.min.js"),
         script(`type`:="text/javascript", src:="http://cdn.jsdelivr.net/jquery/2.1.1/jquery.js"),
         script(`type`:="text/javascript", src:="META-INF/resources/webjars/bootstrap/3.3.4/js/bootstrap.min.js"),
+        script(`type`:="text/javascript", src:="META-INF/resources/webjars/bootstrap-material-design/0.2.2/js/material.min.js"),
+        script(`type`:="text/javascript", src:="META-INF/resources/webjars/bootstrap-material-design/0.2.2/js/ripples.min.js"),
         link(
           rel:="stylesheet",
           `type`:="text/css",
           href:="META-INF/resources/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+        ),
+        link(
+          rel:="stylesheet",
+          `type`:="text/css",
+          href:="META-INF/resources/webjars/bootstrap-material-design/0.2.2/css/material.min.css"
+        ),
+        link(
+          rel:="stylesheet",
+          `type`:="text/css",
+          href:="META-INF/resources/webjars/bootstrap-material-design/0.2.2/css/ripples.min.css"
+        ),
+        link(
+          rel:="stylesheet",
+          `type`:="text/css",
+          href:="META-INF/resources/webjars/bootstrap-material-design/0.2.2/css/material-wfont.min.css"
         )
       ),
       body(margin:=0)(
-        script("popsicle.PopsicleApp().main()")
+        script("popsicle.PopsicleApp().main(); $.material.init()")
       )
     )
 }

@@ -1,9 +1,9 @@
-package popsicle.components
+package popsicle.components.bootstrap
 
 import japgolly.scalajs.react
-import japgolly.scalajs.react._, vdom.all._
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.all._
 import org.scalajs.dom.raw.HTMLElement
-import popsicle.components.Nav.NavData
 
 object Nav {
 
@@ -41,8 +41,9 @@ object Nav {
   }
 }
 
+import Nav._
+
 class Nav(data: NavData) {
-  import Nav._
 
   // renderable
   val nav = component(data)

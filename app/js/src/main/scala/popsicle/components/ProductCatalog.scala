@@ -1,55 +1,48 @@
 package popsicle.components
 
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.all._
+import japgolly.scalajs.react._, vdom.all._
 import popsicle.AjaxRpcClient
-import popsicle.util.Util
+import popsicle.components.backend.AjaxComponent
 
-import scala.scalajs.js
+import scala.concurrent.Future
 
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 
 object ProductCatalog {
 
-
-
-  case class State(products: List[models.Product])
-
-  class Backend($: BackendScope[_, State]) {
-    var interval: js.UndefOr[js.timers.SetIntervalHandle] =
-      js.undefined
-
-    def tick() =
-      $.setState(State(List(models.Product("a", "b", "c"), models.Product("d", "e", "h"))))
-//      AjaxRpcClient.getProduct.foreach { productOption =>
-//        productOption.foreach(product => $.modState(s => State(List(product))))
-//      }
-
-    def start() =
-      tick()
-//      interval = js.timers.setInterval(10000)(tick())
-  }
-
-  val ProductCatalog = ReactComponentB[Unit]("ProductCatalog")
-    .initialState(State(Nil))
-    .backend(new Backend(_))
+  def component = ReactComponentB[List[models.Product]]("product-catalog")
     .render($ => {
-      table(`class` := "table table-striped", "foo".reactAttr := "bar",
+      table(`class` := "table table-striped",
         thead(
           List("ID", "Name", "Producer").map(th(_))
         ),
         tbody(
-          $.state.products.map(p => {
+          $.map(product => {
             tr(
-              td(`class` := "info", p.id),
-              td(`class` := "danger", p.name),
-              td(`class` := "info", p.producer)
+              td(`class` := "info", product.id),
+              td(`class` := "danger", product.name),
+              td(`class` := "info", product.producer)
             )
           })
         )
       )
     })
-    .componentDidMount(_.backend.start())
-    .componentWillUnmount(_.backend.interval foreach js.timers.clearInterval)
-    .buildU
+    .build
+}
+
+class RefreshingProductCatalog extends AjaxComponent[List[models.Product]] {
+  import AjaxComponent.State
+
+  override def initialState = State(Nil)
+
+  override def refreshState: Future[List[models.Product]] =
+    AjaxRpcClient.getProduct.map(option => {
+      // silly me...
+      val nonOption = option.getOrElse(models.Product("a", "b", "c"))
+      List(nonOption)
+    })
+
+  override def stateComponent(state: List[models.Product]) = ProductCatalog.component(state)
+
+  override def refreshInterval = 10000
 }

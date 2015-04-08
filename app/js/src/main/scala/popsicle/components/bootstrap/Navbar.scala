@@ -1,9 +1,7 @@
-package popsicle.components
+package popsicle.components.bootstrap
 
-import japgolly.scalajs.react
-import japgolly.scalajs.react._, japgolly.scalajs.react.vdom.all._
-import org.scalajs.dom.raw.HTMLElement
-import popsicle.components.Nav.NavData
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.all._
 
 object Navbar {
 
@@ -37,7 +35,7 @@ object Navbar {
   }
 }
 
-import Navbar._
+import popsicle.components.bootstrap.Navbar._
 
 class Navbar(data: NavbarData) {
 

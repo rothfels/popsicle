@@ -10,7 +10,7 @@ import reactivemongo.bson.BSONDocument
 
 import popsicle.db.Mongo
 
-trait MongoQueryRPC extends PopsicleRPC {
+trait MongoQueryRPC /* extends PopsicleRPC */ {
   import popsicle.db.collections.ProductCollection.ProductCollectionReader
 
   def getProduct: Option[models.Product] = {

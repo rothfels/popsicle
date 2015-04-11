@@ -1,5 +1,8 @@
 package popsicle
 
+import akka.io.IO
+import spray.can.Http
+import spray.can.server.UHttp
 import upickle._
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -58,7 +61,7 @@ object AutowireServer extends autowire.Server[String, upickle.Reader, upickle.Wr
   def write[Result: upickle.Writer](r: Result) = upickle.write(r)
 }
 
-object Server extends SimpleRoutingApp with MongoQueryRPC {
+object Server extends SimpleRoutingApp with PopsicleRPC /* with MongoQueryRPC */ {
   def main(args: Array[String]): Unit = {
     implicit val system = ActorSystem()
     startServer("0.0.0.0", port = 8080) {
@@ -85,6 +88,17 @@ object Server extends SimpleRoutingApp with MongoQueryRPC {
         }
       }
     }
+
+    //import system.dispatcher
+//    val websocketServer = system.actorOf(WebSocketServer.props(), "websocket")
+//    IO(UHttp) ! Http.Bind(websocketServer, "0.0.0.0", 8081)
+    WebSocketServer.start()
   }
 
+  // def getProduct(): Option[models.Product]
+  var counter = 0
+  override def getCounter(): Int = {
+    counter += 1
+    counter
+  }
 }

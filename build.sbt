@@ -40,13 +40,16 @@ val app = crossProject.settings(
   Revolver.settings:_*
 ).jvmSettings(
   name := "Server",
+  resolvers += "Spray" at "http://repo.spray.io",
+  resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
   libraryDependencies ++= Seq(
-    "io.spray" %% "spray-can" % "1.3.1",
-    "io.spray" %% "spray-routing" % "1.3.1",
+//    "io.spray" %% "spray-can" % "1.3.3",
+//    "io.spray" %% "spray-routing" % "1.3.3",
     "com.typesafe.akka" %% "akka-actor" % "2.3.2",
     "org.webjars" % "bootstrap" % "3.3.4",
     "org.webjars" % "bootstrap-material-design" % "0.2.2",
-    "org.reactivemongo" %% "reactivemongo" % "0.10.5.0.akka23"
+    "org.reactivemongo" %% "reactivemongo" % "0.10.5.0.akka23",
+    "com.wandoulabs.akka" %% "spray-websocket" % "0.1.5-SNAPSHOT"
   )
 )
 

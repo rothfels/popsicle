@@ -4,7 +4,6 @@ import japgolly.scalajs.react._, vdom.all._
 import org.scalajs.dom
 import popsicle.components.bootstrap.{Nav, Navbar}
 import Navbar.NavbarData
-import popsicle.components.RefreshingProductCatalog
 import scala.scalajs.js.JSApp
 import scala.scalajs.js.annotation.JSExport
 import popsicle.pages._
@@ -17,7 +16,8 @@ object PopsicleApp extends JSApp {
 
   case class Backend(t: BackendScope[_, State]) {
     def onMenuClick(newIndex: Int) = {
-      AjaxRpcClient.getProduct.foreach(println(_))
+      // AjaxRpcClient.getProduct.foreach(println(_))
+      AjaxRpcClient.getCounter.foreach(println(_))
       t.modState(_.copy(index = newIndex))
     }
   }
@@ -90,10 +90,14 @@ object PopsicleApp extends JSApp {
   @JSExport
   override def main(): Unit = {
 //    component(List("Home", "Examples", "Documentation"))
-    import popsicle.components.bootstrap.Navbar._
-    val navbar = new Navbar(
-      NavbarData("Brand", List(NavbarState("Link", () => div("foo")), NavbarState("Other", () => div("bar"))))
-    )
-    navbar.renderable render dom.document.body
+//    import popsicle.components.bootstrap.Navbar._
+//    val navbar = new Navbar(
+//      NavbarData("Brand", List(NavbarState("Link", () => div("foo")), NavbarState("Other", () => div("bar"))))
+//    )
+//    navbar.renderable render dom.document.body
+    import popsicle.components.AjaxCounter
+    import popsicle.components.backend.WebsocketComponent
+//    new AjaxCounter().component() render dom.document.body
+    new WebsocketComponent().component() render dom.document.body
   }
 }

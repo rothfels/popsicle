@@ -1,9 +1,6 @@
 package popsicle.components.bootstrap
 
-import japgolly.scalajs.react
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.all._
-import org.scalajs.dom.raw.HTMLElement
+import japgolly.scalajs.react._, vdom.all._
 
 object Nav {
 
@@ -45,11 +42,7 @@ import Nav._
 
 class Nav(data: NavData) {
 
-  // renderable
-  val nav = component(data)
-
-  // for testing; set when component rendered
-  var _navRefs: List[react.Ref] = null
+  val renderable = component(data)
 
   def component = ReactComponentB[NavData]("nav")
     .initialState(State(0))
@@ -76,9 +69,7 @@ class Nav(data: NavData) {
   def navMenu = ReactComponentB[(List[String], NavProps, State, Backend)]("navMenu")
     .render($ => {
       val (navStates, navProps, state, backend) = $
-
-      _navRefs = navStates.map(Ref[HTMLElement](_))
-
+    
       ul(`class` := navProps.classString,
         navStates.zipWithIndex.map(tuple => {
           val (navStateName: String, i: Int) = tuple
@@ -86,7 +77,6 @@ class Nav(data: NavData) {
             `class` := (if (i == state.i) "active" else ""),
             role := "presentation",
             onClick --> backend.go(i),
-            ref := _navRefs(i),
             a(href := "#", navStateName)
           )
         })

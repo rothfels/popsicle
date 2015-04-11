@@ -71,24 +71,29 @@ object PopsicleApp extends JSApp {
 
   def component(data: List[String]) = {
 //    (new RefreshingProductCatalog()).component() render dom.document.body
-    import Nav._
-
-    val data = NavData(
-      List(
-        NavState("foo", () => "foo"),
-        NavState("baz", () => "baz"),
-        NavState("bar", () => "bar")
-      ),
-      NavProps(NavPills)
-    )
-    val myNav = new Nav(data)
-    myNav.nav render dom.document.body
+//    import Nav._
+//
+//    val data = NavData(
+//      List(
+//        NavState("foo", () => "foo"),
+//        NavState("baz", () => "baz"),
+//        NavState("bar", () => "bar")
+//      ),
+//      NavProps(NavPills)
+//    )
+//    val myNav = new Nav(data)
+//    myNav.nav render dom.document.body
 //    (new Navbar(NavbarData(null))).renderable render dom.document.body
-//    app(data) render dom.document.body
+    app(data) render dom.document.body
   }
 
   @JSExport
   override def main(): Unit = {
-    component(List("Home", "Examples", "Documentation"))
+//    component(List("Home", "Examples", "Documentation"))
+    import popsicle.components.bootstrap.Navbar._
+    val navbar = new Navbar(
+      NavbarData("Brand", List(NavbarState("Link", () => div("foo")), NavbarState("Other", () => div("bar"))))
+    )
+    navbar.renderable render dom.document.body
   }
 }

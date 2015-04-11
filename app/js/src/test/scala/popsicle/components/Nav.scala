@@ -25,7 +25,7 @@ object NavComponentTest extends TestSuite {
       val nav = new Nav(data)
 
       'click {
-        val component = ReactTestUtils.renderIntoDocument(nav.nav)
+        val component = ReactTestUtils.renderIntoDocument(nav.renderable)
 //        val ref = nav._navRefs(1)(component).get
         val tabs = ReactTestUtils.scryRenderedDOMComponentsWithTag(component, "li")
         val el = ReactTestUtils.findRenderedDOMComponentWithClass(component, "panel-body")

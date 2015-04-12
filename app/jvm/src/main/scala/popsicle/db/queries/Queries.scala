@@ -1,6 +1,6 @@
 package popsicle.db.queries
 
-import popsicle.PopsicleRPC
+import popsicle.AjaxRPC
 
 import scala.concurrent.duration._
 import scala.concurrent.Await

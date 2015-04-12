@@ -6,13 +6,16 @@ import java.io.File
 val app = crossProject.settings(
   scalaVersion := "2.11.5",
   version := "0.1-SNAPSHOT",
+  resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
   libraryDependencies ++= Seq(
     "com.lihaoyi" %%% "upickle" % "0.2.6",
     "com.lihaoyi" %%% "autowire" % "0.2.4",
     "com.lihaoyi" %%% "scalatags" % "0.4.5",
     "joda-time" % "joda-time" % "2.7",
     "org.scala-lang.modules" %% "scala-async" % "0.9.2",
-    "com.lihaoyi" %%% "utest" % "0.3.0" % "test"
+    "com.lihaoyi" %%% "utest" % "0.3.0" % "test",
+    "com.softwaremill.macwire" %% "macros" % "1.0.2-SNAPSHOT",
+    "com.softwaremill.macwire" %% "runtime" % "1.0.2-SNAPSHOT"
   ),
   testFrameworks += new TestFramework("utest.runner.Framework")
 ).jsSettings(
@@ -40,8 +43,8 @@ val app = crossProject.settings(
   Revolver.settings:_*
 ).jvmSettings(
   name := "Server",
-  resolvers += "Spray" at "http://repo.spray.io",
-  resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
+//  resolvers += "Spray" at "http://repo.spray.io",
+//  resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
   libraryDependencies ++= Seq(
 //    "io.spray" %% "spray-can" % "1.3.3",
 //    "io.spray" %% "spray-routing" % "1.3.3",

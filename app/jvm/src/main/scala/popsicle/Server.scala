@@ -61,7 +61,7 @@ object AutowireServer extends autowire.Server[String, upickle.Reader, upickle.Wr
   def write[Result: upickle.Writer](r: Result) = upickle.write(r)
 }
 
-object Server extends SimpleRoutingApp with PopsicleRPC /* with MongoQueryRPC */ {
+object Server extends SimpleRoutingApp with AjaxRPC /* with MongoQueryRPC */ {
   def main(args: Array[String]): Unit = {
     implicit val system = ActorSystem()
     startServer("0.0.0.0", port = 8080) {
@@ -80,7 +80,7 @@ object Server extends SimpleRoutingApp with PopsicleRPC /* with MongoQueryRPC */
         path("api" / Segments){ s =>
           extract(_.request.entity.asString) { e =>
             complete {
-              AutowireServer.route[PopsicleRPC](Server)(
+              AutowireServer.route[AjaxRPC](Server)(
                 autowire.Core.Request(s, upickle.read[Map[String, String]](e))
               )
             }

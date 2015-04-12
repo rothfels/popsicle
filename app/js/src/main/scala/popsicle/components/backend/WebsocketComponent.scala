@@ -2,6 +2,7 @@ package popsicle.components.backend
 
 import japgolly.scalajs.react.vdom.all._
 import japgolly.scalajs.react.{BackendScope, ReactComponentB}
+import popsicle.backend.websocket.WebSocketPushHandler
 
 import scala.concurrent.Future
 import scala.scalajs.js
@@ -27,6 +28,7 @@ class WebsocketComponent {
       ws.onmessage = (x: MessageEvent) => {
         println("got a message! " + x.data.toString)
         $.setState(State(x.data.toString))
+        WebSocketPushHandler.push(x.data.toString)
       }
       ws.onopen = (x: Event) => {
         println("opened the websocket")

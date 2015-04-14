@@ -1,34 +1,30 @@
-package popsicle.components.backend
+package popsicle.components
 
 import japgolly.scalajs.react.vdom.all._
 import japgolly.scalajs.react.{BackendScope, ReactComponentB}
-import popsicle.backend.websocket.WebSocketPushHandler
-
-import scala.concurrent.Future
-import scala.scalajs.js
 import org.scalajs.dom
 import org.scalajs.dom._
+import popsicle.backend.websocket.WebSocketPushRPCImpl
 
-object WebsocketComponent {
+object WebsocketComponentOld {
 //  case class State[T](s: T)
   case class State(msg: String)
 }
 
-import WebsocketComponent._
+import popsicle.components.WebsocketComponentOld._
 
-class WebsocketComponent {
+class WebsocketComponentOld {
 //  def initialState: State // initial component state
 //  def stateComponent(state: T): TagMod // how to render the state, e.g. div(...)
 
   class Backend($: BackendScope[_, State]) {
-    import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
     val ws = new dom.WebSocket("ws://0.0.0.0:8081")
 
     def init(): Unit = {
       ws.onmessage = (x: MessageEvent) => {
         println("got a message! " + x.data.toString)
         $.setState(State(x.data.toString))
-        WebSocketPushHandler.push(x.data.toString)
+        WebSocketPushRPCImpl.call(x.data.toString)
       }
       ws.onopen = (x: Event) => {
         println("opened the websocket")

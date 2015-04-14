@@ -1,6 +1,5 @@
 package popsicle.db.collections
 
-import org.joda.time.DateTime
 import popsicle.db.Mongo
 
 import reactivemongo.bson._

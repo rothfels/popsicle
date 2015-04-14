@@ -2,7 +2,7 @@ package popsicle.components.examples
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import popsicle.components.util.SideBySide
+import popsicle.components.bootstrap.SideBySide
 
 import scala.scalajs.js
 

@@ -1,7 +1,6 @@
 import sbt.Keys._
 import com.lihaoyi.workbench.Plugin._
 import spray.revolver.RevolverPlugin.Revolver
-import java.io.File
 
 val app = crossProject.settings(
   scalaVersion := "2.11.5",
@@ -11,11 +10,12 @@ val app = crossProject.settings(
     "com.lihaoyi" %%% "upickle" % "0.2.6",
     "com.lihaoyi" %%% "autowire" % "0.2.4",
     "com.lihaoyi" %%% "scalatags" % "0.4.5",
-    "joda-time" % "joda-time" % "2.7",
-    "org.scala-lang.modules" %% "scala-async" % "0.9.2",
+    "com.lihaoyi" %%% "scalarx" % "0.2.8",
     "com.lihaoyi" %%% "utest" % "0.3.0" % "test",
-    "com.softwaremill.macwire" %% "macros" % "1.0.2-SNAPSHOT",
-    "com.softwaremill.macwire" %% "runtime" % "1.0.2-SNAPSHOT"
+    // "joda-time" % "joda-time" % "2.7",
+    "org.scala-lang.modules" %% "scala-async" % "0.9.2"
+    // "com.softwaremill.macwire" %% "macros" % "1.0.2-SNAPSHOT",
+    // "com.softwaremill.macwire" %% "runtime" % "1.0.2-SNAPSHOT"
   ),
   testFrameworks += new TestFramework("utest.runner.Framework")
 ).jsSettings(
@@ -43,11 +43,7 @@ val app = crossProject.settings(
   Revolver.settings:_*
 ).jvmSettings(
   name := "Server",
-//  resolvers += "Spray" at "http://repo.spray.io",
-//  resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
   libraryDependencies ++= Seq(
-//    "io.spray" %% "spray-can" % "1.3.3",
-//    "io.spray" %% "spray-routing" % "1.3.3",
     "com.typesafe.akka" %% "akka-actor" % "2.3.2",
     "org.webjars" % "bootstrap" % "3.3.4",
     "org.webjars" % "bootstrap-material-design" % "0.2.2",
@@ -62,9 +58,9 @@ val appJVM = app.jvm.settings(
     (fastOptJS in (appJS, Compile)).value
     (artifactPath in (appJS, Compile, fastOptJS)).value
   }
-).settings(
+)/*.settings(
   (resources in Compile) += {
     (fastOptJS in (appJS, Compile)).value
     new File((artifactPath in (appJS, Compile, fastOptJS)).value.getPath + ".map")
   }
-)
+)*/

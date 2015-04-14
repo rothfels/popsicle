@@ -2,11 +2,13 @@ package popsicle
 
 import japgolly.scalajs.react._, vdom.all._
 import org.scalajs.dom
+import popsicle.backend.ajax.AjaxRpcClient
+import popsicle.components.WebsocketComponentOld
 import popsicle.components.bootstrap.{Nav, Navbar}
 import Navbar.NavbarData
 import scala.scalajs.js.JSApp
 import scala.scalajs.js.annotation.JSExport
-import popsicle.pages._
+import popsicle.components.pages._
 
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 
@@ -95,9 +97,8 @@ object PopsicleApp extends JSApp {
 //      NavbarData("Brand", List(NavbarState("Link", () => div("foo")), NavbarState("Other", () => div("bar"))))
 //    )
 //    navbar.renderable render dom.document.body
-    import popsicle.components.AjaxCounter
-    import popsicle.components.backend.WebsocketComponent
-//    new AjaxCounter().component() render dom.document.body
-    new WebsocketComponent().component() render dom.document.body
+    import popsicle.components.WebsocketComponentOld
+    //    new AjaxCounter().component() render dom.document.body
+    new WebsocketComponentOld().component() render dom.document.body
   }
 }

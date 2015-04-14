@@ -1,9 +1,8 @@
-package popsicle.components
+package popsicle.components.bootstrap
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.test.ReactTestUtils
 import japgolly.scalajs.react.vdom.all._
-import popsicle.components.bootstrap.Nav
 import utest._
 
 object NavComponentTest extends TestSuite {

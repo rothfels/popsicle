@@ -1,4 +1,4 @@
-package popsicle.pages
+package popsicle.components.pages
 
 import japgolly.scalajs.react._, vdom.all._
 

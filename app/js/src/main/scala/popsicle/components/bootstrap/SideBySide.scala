@@ -1,4 +1,4 @@
-package popsicle.components.util
+package popsicle.components.bootstrap
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.all._

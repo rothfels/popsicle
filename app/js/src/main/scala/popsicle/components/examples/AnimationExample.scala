@@ -4,7 +4,7 @@ import japgolly.scalajs.react.Addons.ReactCssTransitionGroup
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom.window
-import popsicle.components.util.SideBySide
+import popsicle.components.bootstrap.SideBySide
 
 
 /** http://facebook.github.io/react/docs/animation.html */

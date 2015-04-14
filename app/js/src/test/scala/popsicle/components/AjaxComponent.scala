@@ -1,74 +1,81 @@
 package popsicle.components
 
+import popsicle.components.backend.ajax.AjaxBackend
+
+import japgolly.scalajs.react.BackendScope
 import japgolly.scalajs.react.test.{ComponentM, ReactTestUtils}
-import popsicle.components.backend.AjaxComponent
+
 import utest._
 
-import scala.concurrent.{Promise, Future}
 import scala.scalajs.js
+import scala.concurrent.{Promise, Future}
 import scala.util.{Try, Success}
 
 
 object AjaxComponentTest extends TestSuite {
 
-  abstract class TestAjaxComponent extends AjaxComponent[String] {
-    override def initialState = AjaxComponent.State("initial")
+  class TestAjaxComponent(backendFactory: BackendScope[_, String] => AjaxBackend[String])
+    extends AjaxComponent[String](backendFactory) {
 
     import japgolly.scalajs.react._, vdom.all._
-    override def stateComponent(state: String) = div(`class` := "state", state)
+
+    override def initState = "initial"
+    override def renderState(state: String) = div(`class` := "state", state)
   }
 
-  def assertState(c: ComponentM, state: String): Unit = {
-    val el = ReactTestUtils.findRenderedDOMComponentWithClass(c, "state")
+  def assertState(component: ComponentM, state: String): Unit = {
+    val el = ReactTestUtils.findRenderedDOMComponentWithClass(component, "state")
     assert(el.getDOMNode().innerHTML == state)
   }
 
   val tests = TestSuite {
-
     'nonRefreshingAjax {
 
       'incompleteFuture {
-        class IncompleteComponent extends TestAjaxComponent {
-          override def refreshState: Future[String] = Promise().future
+        case class IncompleteFuture($: BackendScope[_, String]) extends AjaxBackend($) {
+          override def ajaxFn: Future[String] = Promise().future
         }
 
-        val c = ReactTestUtils.renderIntoDocument(new IncompleteComponent().component())
-        assertState(c, "initial")
+        val incompleteFuture = new TestAjaxComponent(IncompleteFuture.apply)
+        val component = ReactTestUtils.renderIntoDocument(incompleteFuture.buildComponent())
+        assertState(component, "initial")
       }
 
       'completeFuture {
-        class CompletedComponent extends TestAjaxComponent {
+        case class CompleteFuture($: BackendScope[_, String]) extends AjaxBackend($) {
           import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
-          override def refreshState: Future[String] = Future("future")
+          override def ajaxFn: Future[String] = Future("future")
         }
 
-        val c = ReactTestUtils.renderIntoDocument(new CompletedComponent().component())
-        assertState(c, "future")
+        val completeFuture = new TestAjaxComponent(CompleteFuture.apply)
+        val component = ReactTestUtils.renderIntoDocument(completeFuture.buildComponent())
+        assertState(component, "future")
       }
     }
 
     'refreshingAjax {
-      class RefreshAjaxComponent extends TestAjaxComponent {
-        var refreshCount = 0
-        override def refreshState: Future[String] = {
+      case class RefreshAjax($: BackendScope[_, String]) extends AjaxBackend($) {
+        var ajaxCount = 0
+        override def ajaxFn: Future[String] = {
+          // Incomplete first ajax call; complete second ajax call.
           val promise = Promise[String]()
-          if (refreshCount > 0) {
-            // complete only after first call to refresh
+          if (ajaxCount > 0) {
             promise.complete(Success("future"))
           }
-          refreshCount += 1
+          ajaxCount += 1
           promise.future
         }
-        override def refreshInterval = 1000
+        override val refreshInterval = 1000
       }
 
       'refreshDelay {
-        val c = ReactTestUtils.renderIntoDocument(new RefreshAjaxComponent().component())
-        assertState(c, "initial")
+        val refreshAjax = new TestAjaxComponent(RefreshAjax.apply)
+        val component = ReactTestUtils.renderIntoDocument(refreshAjax.buildComponent())
+        assertState(component, "initial")
 
         val promise = Promise[Unit]()
         js.timers.setTimeout(2000) {
-          promise.complete(Try(assertState(c, "future")))
+          promise.complete(Try(assertState(component, "future")))
         }
 
         promise.future

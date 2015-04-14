@@ -1,9 +1,9 @@
-package popsicle
+package popsicle.backend.ajax
 
 import org.scalajs.dom
-
-import autowire._
+import popsicle.AjaxRPC
 import upickle._
+import autowire._
 
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow

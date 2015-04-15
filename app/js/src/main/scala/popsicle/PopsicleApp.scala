@@ -2,10 +2,10 @@ package popsicle
 
 import japgolly.scalajs.react._, vdom.all._
 import org.scalajs.dom
-import popsicle.backend.ajax.AjaxRpcClient
 import popsicle.components.WebsocketComponentOld
 import popsicle.components.bootstrap.{Nav, Navbar}
 import Navbar.NavbarData
+//import popsicle.rpc.AjaxRpcClient
 import scala.scalajs.js.JSApp
 import scala.scalajs.js.annotation.JSExport
 import popsicle.components.pages._
@@ -19,7 +19,7 @@ object PopsicleApp extends JSApp {
   case class Backend(t: BackendScope[_, State]) {
     def onMenuClick(newIndex: Int) = {
       // AjaxRpcClient.getProduct.foreach(println(_))
-      AjaxRpcClient.getCounter.foreach(println(_))
+//      AjaxRpcClient.getCounter.foreach(println(_))
       t.modState(_.copy(index = newIndex))
     }
   }
@@ -99,6 +99,6 @@ object PopsicleApp extends JSApp {
 //    navbar.renderable render dom.document.body
     import popsicle.components.WebsocketComponentOld
     //    new AjaxCounter().component() render dom.document.body
-    new WebsocketComponentOld().component() render dom.document.body
+    new WebsocketComponentOld().component render dom.document.body
   }
 }

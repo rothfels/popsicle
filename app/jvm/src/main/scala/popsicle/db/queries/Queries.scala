@@ -1,7 +1,5 @@
 package popsicle.db.queries
 
-import popsicle.AjaxRPC
-
 import scala.concurrent.duration._
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global

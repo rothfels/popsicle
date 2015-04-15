@@ -2,6 +2,7 @@ package popsicle
 
 import akka.actor.{ActorSystem, Actor, Props, ActorLogging, ActorRef, ActorRefFactory}
 import akka.io.IO
+import popsicle.rpc.counter.Counter
 import spray.can.Http
 import spray.can.server.UHttp
 import spray.can.websocket
@@ -9,8 +10,6 @@ import spray.can.websocket.frame.{BinaryFrame, TextFrame}
 import spray.http.HttpRequest
 import spray.can.websocket.FrameCommandFailed
 import spray.routing.HttpServiceActor
-
-import scala.concurrent.Future
 
 /**
  * Foundational server-generated message.
@@ -57,7 +56,7 @@ class WebSocketWorker(val serverConnection: ActorRef) extends HttpServiceActor w
     // Currently "pongs" the message directly back to the client.
     case x @ (_: BinaryFrame | _: TextFrame) =>
       log.error("received push message")
-      PushRPCClient.incrementCounter
+      Counter.Client.incrementCounter
         .map(req => TextFrame(upickle.write(req)))
         .pipeTo(sender())
 
@@ -78,23 +77,4 @@ class WebSocketWorker(val serverConnection: ActorRef) extends HttpServiceActor w
       // getFromResourceDirectory("")
     }
   }
-
-}
-
-import autowire._
-
-object PushSender extends autowire.Client[String, upickle.Reader, upickle.Writer] {
-  import scala.concurrent.ExecutionContext.Implicits.global
-
-  override def doCall(req: Request): Future[String] = {
-    Future(write(req))
-  }
-
-  def read[Result: upickle.Reader](p: String) = upickle.read[Result](p)
-  def write[Result: upickle.Writer](r: Result) = upickle.write(r)
-}
-
-object PushRPCClient {
-  import scala.concurrent.ExecutionContext.Implicits.global
-  def incrementCounter = PushSender[WebSocketPushRPC].incrementCounter.call()
 }

@@ -1,7 +1,5 @@
 package popsicle.backend.websocket
 
-import popsicle.WebSocketPushRPC
-
 trait WebSocket {
   import rx._
 
@@ -25,7 +23,6 @@ trait WebSocket {
  * for each method invocation conditioned on "echo" boolean flag.
  */
 class EchoWebSocket extends WebSocket {
-
   val echo = true
 
   override def init(): Unit = {
@@ -63,35 +60,25 @@ import org.scalajs.dom
 /**
  * Wrapper for org.scalajs.dom.WebSocket
  */
-class DomWebSocket(ws: Option[dom.WebSocket]) extends EchoWebSocket {
+class DomWebSocket(ws: dom.WebSocket) extends EchoWebSocket {
 
   override def init(): Unit = {
     super.init()
 
     import dom._
-    ws.foreach(_.onmessage = (e: MessageEvent) => onReceive(e.data.toString))
-    ws.foreach(_.onopen = (e: Event) => onOpen())
-    ws.foreach(_.onerror = (e: ErrorEvent) => onError(e.message))
-    ws.foreach(_.onclose = (e: CloseEvent) => onClose())
+    ws.onmessage = (e: MessageEvent) => onReceive(e.data.toString)
+    ws.onopen = (e: Event) => onOpen()
+    ws.onerror = (e: ErrorEvent) => onError(e.message)
+    ws.onclose = (e: CloseEvent) => onClose()
   }
 
   override def send(msg: String): Unit = {
     super.send(msg)
-    ws.foreach(_.send(msg))
+    ws.send(msg)
   }
   
   override def close(): Unit = {
     super.close()
-    ws.foreach(_.close())// close with status code?
-  }
-}
-
-/**
- * WebSocket supporting server -> client "push" rpc messages.
- */
-class PushRPCWebSocket(ws: Option[dom.WebSocket], rpc: WebSocketPushRPC) extends DomWebSocket(ws) {
-  override def onReceive(msg: String): Unit = {
-    super.onReceive(msg)
-    rpc.call(msg)
+    ws.close()// close with status code?
   }
 }

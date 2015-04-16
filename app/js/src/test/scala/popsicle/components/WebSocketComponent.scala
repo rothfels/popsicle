@@ -1,7 +1,9 @@
 package popsicle.components
 
-import popsicle.backend.websocket.{EchoWebSocket, WebSocket}
-import popsicle.components.backend.websocket.WebSocketBackend
+import popsicle.websocket.WebSocket
+import popsicle.websocket.EchoWebSocket
+import popsicle.components.backend.WebSocketComponent
+import popsicle.components.backend.WebSocketBackend
 
 import japgolly.scalajs.react.BackendScope
 import japgolly.scalajs.react.test.{ComponentM, ReactTestUtils}
@@ -32,7 +34,7 @@ object WebSocketComponentTest extends TestSuite {
       }
 
       val ws = new EchoWebSocket()
-      val reactivePush = new TestWebSocketComponent($ => ReactivePush.apply($, ws))
+      val reactivePush = new TestWebSocketComponent(ReactivePush.apply(_, ws))
       val component = ReactTestUtils.renderIntoDocument(reactivePush.buildComponent())
       assertState(component, "initial")
       ws.onReceive("push")

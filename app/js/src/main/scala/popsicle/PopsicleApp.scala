@@ -2,7 +2,6 @@ package popsicle
 
 import japgolly.scalajs.react._, vdom.all._
 import org.scalajs.dom
-import popsicle.components.WebsocketComponentOld
 import popsicle.components.bootstrap.{Nav, Navbar}
 import Navbar.NavbarData
 //import popsicle.rpc.AjaxRpcClient
@@ -97,8 +96,8 @@ object PopsicleApp extends JSApp {
 //      NavbarData("Brand", List(NavbarState("Link", () => div("foo")), NavbarState("Other", () => div("bar"))))
 //    )
 //    navbar.renderable render dom.document.body
-    import popsicle.components.WebsocketComponentOld
-    //    new AjaxCounter().component() render dom.document.body
-    new WebsocketComponentOld().component render dom.document.body
+//    import popsicle.components.WebsocketComponentOld
+//        new AjaxCounter().component() render dom.document.body
+//    new WebsocketComponentOld().component render dom.document.body
   }
 }

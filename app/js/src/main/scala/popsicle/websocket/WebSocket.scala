@@ -1,4 +1,4 @@
-package popsicle.backend.websocket
+package popsicle.websocket
 
 trait WebSocket {
   import rx._
@@ -19,9 +19,9 @@ trait WebSocket {
 }
 
 /**
- * This WebSocket implementation prints console logs
- * for each method invocation conditioned on "echo" boolean flag.
- */
+* This WebSocket implementation prints console logs
+* for each method invocation conditioned on "echo" boolean flag.
+*/
 class EchoWebSocket extends WebSocket {
   val echo = true
 
@@ -58,8 +58,8 @@ class EchoWebSocket extends WebSocket {
 import org.scalajs.dom
 
 /**
- * Wrapper for org.scalajs.dom.WebSocket
- */
+* Wrapper for org.scalajs.dom.WebSocket
+*/
 class DomWebSocket(ws: dom.WebSocket) extends EchoWebSocket {
 
   override def init(): Unit = {
@@ -76,7 +76,7 @@ class DomWebSocket(ws: dom.WebSocket) extends EchoWebSocket {
     super.send(msg)
     ws.send(msg)
   }
-  
+
   override def close(): Unit = {
     super.close()
     ws.close()// close with status code?

@@ -1,10 +1,9 @@
 package popsicle.components.examples
 
 import japgolly.scalajs.react.BackendScope
-import popsicle.backend.websocket.{DomWebSocket, WebSocket}
-import popsicle.components.backend.{BackendComponent, ComponentBackend}
-import popsicle.components.backend.ajax.AjaxBackend
-import popsicle.components.backend.websocket.WebSocketPushRPCBackend
+import popsicle.websocket.WebSocket
+import popsicle.websocket.DomWebSocket
+import popsicle.components.backend._
 import popsicle.rpc.counter.Counter
 
 import scala.concurrent.Future
@@ -17,7 +16,7 @@ case class CounterWebSocketBackend($: BackendScope[_, Int], ws: WebSocket)
 }
 
 case class CounterAjaxBackend($: BackendScope[_, Int]) extends AjaxBackend($) {
-  override def ajaxFn: Future[Int] = {
+  override def ajax: Future[Int] = {
     println("doing ajax!")
     Counter.Server.getCounter.map { x =>
       println("ajax returned: " + x)
@@ -26,17 +25,17 @@ case class CounterAjaxBackend($: BackendScope[_, Int]) extends AjaxBackend($) {
   }
 }
 
-case class CounterBackend($: BackendScope[_, Int], ws: WebSocket) extends ComponentBackend($) {
+case class CounterBackend($: BackendScope[_, Int], ws: WebSocket) extends Backend($) {
   val wsBackend = CounterWebSocketBackend($, ws)
   val ajaxBackend = CounterAjaxBackend($)
 
   override def init(): Unit = {
-//    wsBackend.init()
+    wsBackend.init()
     ajaxBackend.init()
   }
 
   override def close(): Unit = {
-//    wsBackend.close()
+    wsBackend.close()
     ajaxBackend.close()
   }
 }
@@ -53,9 +52,10 @@ case class CounterWebSocket(ws: org.scalajs.dom.WebSocket) extends DomWebSocket(
   }
 }
 
-case class CounterComponent(ws: WebSocket) extends BackendComponent[Int]($ => CounterBackend.apply($, ws)) {
+case class CounterComponent(ws: WebSocket) extends BackendComponent[Int](CounterBackend.apply(_, ws)) {
   import japgolly.scalajs.react.vdom.all._
 
   override def initState = 0
   override def renderState(state: Int) = div("counter: " + state)
+  override def componentName = "counter"
 }

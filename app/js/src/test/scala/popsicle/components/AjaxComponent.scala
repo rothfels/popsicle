@@ -1,6 +1,6 @@
 package popsicle.components
 
-import popsicle.components.backend.ajax.AjaxBackend
+import popsicle.components.backend.{IntervalAjaxBackend, AjaxBackend, AjaxComponent}
 
 import japgolly.scalajs.react.BackendScope
 import japgolly.scalajs.react.test.{ComponentM, ReactTestUtils}
@@ -33,7 +33,7 @@ object AjaxComponentTest extends TestSuite {
 
       'incompleteFuture {
         case class IncompleteFuture($: BackendScope[_, String]) extends AjaxBackend($) {
-          override def ajaxFn: Future[String] = Promise().future
+          override def ajax: Future[String] = Promise().future
         }
 
         val incompleteFuture = new TestAjaxComponent(IncompleteFuture.apply)
@@ -44,7 +44,7 @@ object AjaxComponentTest extends TestSuite {
       'completeFuture {
         case class CompleteFuture($: BackendScope[_, String]) extends AjaxBackend($) {
           import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
-          override def ajaxFn: Future[String] = Future("future")
+          override def ajax: Future[String] = Future("future")
         }
 
         val completeFuture = new TestAjaxComponent(CompleteFuture.apply)
@@ -54,9 +54,9 @@ object AjaxComponentTest extends TestSuite {
     }
 
     'refreshingAjax {
-      case class RefreshAjax($: BackendScope[_, String]) extends AjaxBackend($) {
+      case class RefreshAjax($: BackendScope[_, String]) extends IntervalAjaxBackend($) {
         var ajaxCount = 0
-        override def ajaxFn: Future[String] = {
+        override def ajax: Future[String] = {
           // Incomplete first ajax call; complete second ajax call.
           val promise = Promise[String]()
           if (ajaxCount > 0) {
@@ -65,7 +65,7 @@ object AjaxComponentTest extends TestSuite {
           ajaxCount += 1
           promise.future
         }
-        override val refreshInterval = 1000
+        override def refreshInterval = 1000
       }
 
       'refreshDelay {

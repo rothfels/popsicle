@@ -11,7 +11,3 @@ object PushRPCClient extends autowire.Client[String, upickle.Reader, upickle.Wri
   def read[Result: upickle.Reader](p: String) = upickle.read[Result](p)
   def write[Result: upickle.Writer](r: Result) = upickle.write(r)
 }
-
-//object PushRPCClient {
-//  def incrementCounter = PushRPCClient[IncrementCounter].incrementCounter.call()
-//}

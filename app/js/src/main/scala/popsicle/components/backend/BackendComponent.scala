@@ -34,27 +34,50 @@ abstract class BackendComponent[State]
     .buildU
 }
 
-///**
-// * Base class for stateful react component (constructed with props) with a backend
-// *
-// * @param backendFactory injected backend factory
-// * @tparam Props component constructor arg
-// * @tparam State underlying component state
-// */
-//abstract class BackendComponentP[Props, State]
-//  (backendFactory: BackendScope[Props, State] => Backend) {
-//
-//  def initState: State
-//  def renderState(state: State): ReactElement
-//  def componentName: String
-//
-//  def buildComponent = ReactComponentB[Props](componentName)
-//    .initialState(initState)
-//    .backend(backendFactory(_))
-//    .render($ => renderState($.state))
-//    .componentDidMount(_.backend.init())
-//    .componentWillUnmount(_.backend.close())
-//    .build
-//}
-//
+/**
+* Base class for stateful react component (constructed with props) with a backend
+*
+* @param backendFactory injected backend factory
+* @tparam Props component constructor arg
+* @tparam State underlying component state
+*/
+abstract class BackendComponentP[Props, State]
+  (backendFactory: BackendScope[Props, State] => Backend) {
+
+  def initState: State
+  def renderState(props: Props, state: State): ReactElement
+  def componentName: String
+
+  def buildComponent = ReactComponentB[Props](componentName)
+    .initialState(initState)
+    .backend(backendFactory(_))
+    .render($ => renderState($.props, $.state))
+    .componentDidMount(_.backend.init())
+    .componentWillUnmount(_.backend.close())
+    .build
+}
+
+/**
+ * Base class for stateful react component (constructed with props) with a backend
+ *
+ * @param backendFactory injected backend factory
+ * @tparam Props component constructor arg
+ * @tparam State underlying component state
+ */
+abstract class BackendComponentPB[Props, State, B <: Backend]
+  (backendFactory: BackendScope[Props, State] => B) {
+
+  def initState: State
+  def renderState(props: Props, state: State, backend: B): ReactElement
+  def componentName: String
+
+  def buildComponent = ReactComponentB[Props](componentName)
+    .initialState(initState)
+    .backend(backendFactory(_))
+    .render($ => renderState($.props, $.state, $.backend))
+    .componentDidMount(_.backend.init())
+    .componentWillUnmount(_.backend.close())
+    .build
+}
+
 

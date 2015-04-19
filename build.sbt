@@ -46,7 +46,6 @@ val app = crossProject.settings(
   libraryDependencies ++= Seq(
     "com.typesafe.akka" %% "akka-actor" % "2.3.2",
     "org.webjars" % "bootstrap" % "3.3.4",
-    "org.webjars" % "bootstrap-material-design" % "0.2.2",
     "org.reactivemongo" %% "reactivemongo" % "0.10.5.0.akka23",
     "com.wandoulabs.akka" %% "spray-websocket" % "0.1.5-SNAPSHOT"
   )

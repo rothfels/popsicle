@@ -1,20 +1,17 @@
 package popsicle.rpc
 
 // Interface for client -> server requests (via ajax post).
-trait PollRPC {
-  // def getProduct(): Option[models.Product]
-//  def getCounter(): Int
-}
+trait PollRPC {}
 
 // Interface for server -> client push messages (via websocket).
 trait PushRPC {
   /**
-   * This type is syntactic sugar only.
+   * Syntactic sugar only.
    * When the server makes a method call to the socket push rpc,
-   * autowire requires a non-unit, typed response.
+   * autowire requires a non-unit typed response.
    *
-   * (The response is represented as the autowire request sent
-   * over the websocket pipe).
+   * (The response here is represented as the autowire request
+   * to be sent over the websocket).
    *
    * The implementing class is free to return null.
    */

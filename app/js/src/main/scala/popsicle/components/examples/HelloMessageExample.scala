@@ -2,7 +2,7 @@ package popsicle.components.examples
 
 import japgolly.scalajs.react.ReactComponentB
 import japgolly.scalajs.react.vdom.prefix_<^._
-import popsicle.components.bootstrap.SideBySide
+import popsicle.components.bootstrap.layout.SideBySide
 
 /** Scala version of "A Simple Component" on http://facebook.github.io/react/ */
 object HelloMessageExample {

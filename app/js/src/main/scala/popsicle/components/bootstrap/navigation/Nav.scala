@@ -1,6 +1,7 @@
-package popsicle.components.bootstrap
+package popsicle.components.bootstrap.navigation
 
-import japgolly.scalajs.react._, vdom.all._
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.all._
 
 object Nav {
 
@@ -38,7 +39,7 @@ object Nav {
   }
 }
 
-import Nav._
+import popsicle.components.bootstrap.navigation.Nav._
 
 class Nav(data: NavData) {
 

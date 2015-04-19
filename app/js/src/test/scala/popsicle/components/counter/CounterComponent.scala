@@ -1,4 +1,4 @@
-package popsicle.components
+package popsicle.components.counter
 
 import popsicle.components.util.TestStringBackendComponent
 import popsicle.websocket.WebSocket
@@ -10,7 +10,7 @@ import japgolly.scalajs.react.test.{ComponentM, ReactTestUtils}
 
 import utest._
 
-object WebSocketComponentTest extends TestSuite {
+object CounterComponentTest extends TestSuite {
 
   case class ReactivePushBackend($: BackendScope[_, String], ws: WebSocket) extends WebSocketBackend($, ws) {
     import rx._, ops._

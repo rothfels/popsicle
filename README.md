@@ -1,33 +1,31 @@
 # Popsicle
 
-Remember the summer days when we were young and life was simple? Then you lay on the lawn and enjoyed yourself an icy cool popsicle.
+Remember the summer days when we were young and life was simple? Then you lay on the lawn and enjoyed an icy cool popsicle.
 
 Gather round, friends, and let's enjoy a popsicle together once more!
 
 ## Overview
 
 This is an experimental repository for full-stack web development in Scala. It comprises:
-- A [Spray](http://spray.io/) server (run on the JVM) serving a single-page-application (HTML) composed of [React](http://facebook.github.io/react/) UI components, as well as a RPC API mounted at `/api/`.
-- A [Scala.js](http://www.scala-js.org/) web client using the [Autowire](https://github.com/lihaoyi/autowire) library to connect React components to the Spray server API via Ajax (wrapped in type-safe, auto-routed RPCs).
-
-The server connects to mongo using the [ReactiveMongo](http://reactivemongo.org/) Scala driver, which is fully async / non-blocking. It builds on [Akka](http://akka.io/) and makes a perfect complement to Spray, which builds on Akka too.
-
-The React components are written in Scala with [extended](https://github.com/japgolly/scalajs-react) [scalatags](https://github.com/lihaoyi/scalatags) and compile down to optimized Javascript via [Google Closure Compiler](https://developers.google.com/closure/compiler/).
+- A [Spray](http://spray.io/) server (running on the JVM) serving a single-page-application (HTML) composed of [React](http://facebook.github.io/react/) UI components built in [Scala.js](http://www.scala-js.org/) with [extended](https://github.com/japgolly/scalajs-react) [scalatags](https://github.com/lihaoyi/scalatags).
+- An API mounted at `/api/` for client RPC via http post
+- A websocket Spray server (currently running as a separate process on port 8081).
+- [Autowire](https://github.com/lihaoyi/autowire) to provide seamless, type-safe RPC from client to server (via ajax) and from server to client (via websocket).
+- Single sbt project cross-compiled to JS and JVM via [cross-build](http://www.scala-js.org/doc/sbt/cross-building.html).
+- [utest](https://github.com/lihaoyi/utest) framework for client and server tests
 
 ## Project Organization
 
 There are three main sub-directories of `app`:
-- `js`: client code; React component defintions compiled to Javascript
-- `jvm`: server code; serves compiled Javascript in an single-page HTML app and mounts an API for remote procedure call
-- `shared`: RPC definitions; shared by client and server code
+- `js`: client code; React component defintions compiled to Javascript with Google Closure compiler
+- `jvm`: server code; serves compiled Javascript in an single-page HTML app, mounts an API for remote procedure call, websocket server
+- `shared`: model and RPC interface definitions; shared by client and server code
 
 ## Motivation
 
-Scala is a powerful language. Together with Autowire (macro to perform type-safe, reflection-free RPC between Scala systems), Scala.js, and scalatags it provides an extremely efficient way to build cross platform, scalable web applications in an integrated environment where the language (Scala) does most of the work. The dependencies for the project are extremely thin.
+Scala is a powerful language. With nothing more than its core features this project provides a completely transparent interface for client and server communication all managed within one project. The compiler eliminates an entire class of problems: end-to-end type errors. With strong typing we also get the benefits of powerful code (analysis, jump-to-definition, find-usages) and refactoring tools. It is an interesting study of what full-stack web development could feel like if we could completely avoid Javascript.
 
-Under-the-hood, Autowire macros convert method calls into RPCs, together with relevant serialization code, and allow you to make type-safe API calls from Javascript to your JVM. Since the RPCs appear to be method calls, tools like IDEs are able to work with them doing project-wide renames or analysis, jump-to-definition, find-usages, etc. Most importantly, the compiler is able to typecheck these RPCs and ensure that you are always calling them with the correct arguments and handling the return-value correctly in turn. This removes an entire class of errors. Autowire is completely agnostic to both the serialization library and the transport-mechanism.
-
-The ability to write (and test!) React components in the same compiled and type-safe environment you build your APIs and server code in doesn't sound or even feel real. You must see it to believe it.
+Warning: tools and support for development are weak with this project setup. Testing, in particular, can get tricky. JVM tests go pretty much as you expect, but testing your React components in PhantomJS can get tricky without sourcemap support (currently missing feature in Phantom, not ScalaJS).
 
 ## Building
 
@@ -40,3 +38,13 @@ sbt ~re-start
 ```
 
 And go to `localhost:8080`
+
+## Testing
+
+(To run both scalajs and scalajvm tests...)
+
+In the console:
+
+```
+sbt ~test
+```

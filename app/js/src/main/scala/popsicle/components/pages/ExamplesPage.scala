@@ -1,7 +1,7 @@
 package popsicle.components.pages
 
 import japgolly.scalajs.react._, vdom.all._
-import popsicle.components.bootstrap.{SideBySide, SingleSide}
+import popsicle.components.bootstrap.layout.{SingleSide, SideBySide}
 import popsicle.components.examples._
 
 sealed abstract class Example(val title: String, val el: () => ReactElement)

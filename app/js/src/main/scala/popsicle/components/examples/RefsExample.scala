@@ -3,7 +3,7 @@ package popsicle.components.examples
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom.raw.HTMLInputElement
-import popsicle.components.bootstrap.SideBySide
+import popsicle.components.bootstrap.layout.SideBySide
 
 
 /** Scala version of example on http://facebook.github.io/react/docs/more-about-refs.html */

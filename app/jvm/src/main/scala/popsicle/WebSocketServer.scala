@@ -44,7 +44,7 @@ object WebSocketWorker {
   def props(serverConnection: ActorRef) = Props(classOf[WebSocketWorker], serverConnection)
 }
 
-class WebSocketWorker(val serverConnection: ActorRef) extends HttpServiceActor with websocket.WebSocketServerWorker {
+class WebSocketWorker(val serverConnection: ActorRef) extends HttpServiceActor with spray.can.websocket.WebSocketServerWorker {
   import akka.pattern.pipe
   import scala.concurrent.ExecutionContext.Implicits.global
 

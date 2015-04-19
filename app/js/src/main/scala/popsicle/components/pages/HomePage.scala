@@ -8,7 +8,7 @@ object HomePage {
     h1(
       a(
         color := "#000",
-        href := "https://github.com/goodeggs/popsicle",
+        href := "https://github.com/rothfels/popsicle",
         "have a popsicle!"
       )
     ),
